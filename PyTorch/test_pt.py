@@ -16,7 +16,8 @@ def measure_latency(pipe, prompt):
     # Timed run
     for _ in range(10):
         start_time = perf_counter()
-        _ = pipe(prompt)
+        with torch.inference_mode():
+            _ = pipe(prompt)
         latency = perf_counter() - start_time
         latencies.append(latency)
     # Compute run statistics
