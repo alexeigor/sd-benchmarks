@@ -34,7 +34,6 @@ def main():
     baseline_image = pipe_base(prompt, guidance_scale=7.5).images[0]
     baseline_image.save(f"baseline.png")
 
-    pipe_ds = DiffusionPipeline.from_pretrained(model, torch_dtype=torch.half).to("cuda")
     prompt = "a photo of an astronaut riding a horse on mars"
 
     vanilla_results = measure_latency(pipe_base, prompt)

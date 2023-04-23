@@ -1,5 +1,5 @@
 
-FROM pytorch/pytorch:2.0.0-cuda11.7-cudnn8-devel
+FROM nvcr.io/nvidia/pytorch:23.03-py3
 
 RUN apt-get update && apt-get install --no-install-recommends -y curl && apt-get -y install git
 
