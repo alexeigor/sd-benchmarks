@@ -1,4 +1,3 @@
-import deepspeed
 import torch
 import os
 
@@ -36,33 +35,11 @@ def main():
     baseline_image.save(f"baseline.png")
 
     pipe_ds = DiffusionPipeline.from_pretrained(model, torch_dtype=torch.half).to("cuda")
-    # tomesd.apply_patch(pipe_ds, ratio=0.5) # Can also use pipe.unet in place of pipe here
-
-
-    # NOTE: DeepSpeed inference supports local CUDA graphs for replaced SD modules.
-    #       Local CUDA graphs for replaced SD modules will only be enabled when `mp_size==1`
-    pipe_ds = deepspeed.init_inference(
-        pipe_ds,
-        mp_size=1,
-        dtype=torch.half,
-        replace_with_kernel_inject=True,
-        enable_cuda_graph=True,
-    )
-
-    pipe_ds.profile_model_time()
-
-    deepspeed_image = pipe_ds(prompt, guidance_scale=7.5).images[0]
-    deepspeed_image.save(f"deepspeed.png")
-
     prompt = "a photo of an astronaut riding a horse on mars"
 
     vanilla_results = measure_latency(pipe_base, prompt)
 
     print(f"Vanilla pipeline: {vanilla_results[0]}")
-
-    vanilla_results = measure_latency(pipe_ds, prompt)
-
-    print(f"Deepspeed pipeline: {vanilla_results[0]}")
 
 if __name__ == "__main__":
     main()
