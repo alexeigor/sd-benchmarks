@@ -1,11 +1,11 @@
 # ds-benchmarks
 
-#### A100 GPU
+## Stable Diffusion benchmarks
 
-![A100_GPU_graph](./graphs/A100_GPU_latency.png)
+batch size = 1
 
-| GPU                    | PyTorch, fp16 | DeepSpeed     |
-| :--------------------- | :-----------  | :------------ |
-| A100, SXM, 40gb        | 2.30 s        |               |
-| V100, 16gb             | 2.96 s        |               |
-| T4, 16gb               | 7.83 s        |               |
+| GPU                    | PT2.0,fp16,xformers | PT,fp16 | DeepSpeed,fp16 |
+| :--------------------- | :-----------        | :-------| :-----         |
+| A100, SXM, 40gb        | 2.03 s              | 2.8 s   | 1.28 s         |
+| V100, 16gb             | 2.96 s              |         |                |
+| T4, 16gb               | 7.83 s              |         |                |
