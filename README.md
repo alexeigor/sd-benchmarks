@@ -1,4 +1,4 @@
-# ds-benchmarks
+# sd-benchmarks
 
 ## Stable Diffusion benchmarks
 
