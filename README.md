@@ -19,8 +19,13 @@ docker build . -t test_engine
 docker run -it -v ${PWD}:${PWD} -w ${PWD} --gpus all test_engine
 ```
 
+## How to run
+1. xFormers
+2. Channels last https://huggingface.co/docs/diffusers/main/en/optimization/fp16#using-channels-last-memory-format
+3. 
 
-References:
+
+## References:
 1. https://github.com/microsoft/DeepSpeed-MII/tree/main/examples/benchmark/txt2img
 2. https://github.com/Oneflow-Inc/oneflow
 3. https://github.com/facebookincubator/AITemplate
