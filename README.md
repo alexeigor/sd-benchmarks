@@ -24,3 +24,4 @@ References:
 3. https://github.com/facebookincubator/AITemplate
 4. https://arxiv.org/abs/2304.11267
 5. https://github.com/dbolya/tomesd
+6. https://huggingface.co/docs/diffusers/main/en/optimization/fp16
