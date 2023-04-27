@@ -1,6 +1,6 @@
-# sd-benchmarks
-
 ## Stable Diffusion benchmarks
+
+model: https://huggingface.co/runwayml/stable-diffusion-v1-5
 
 batch size = 1
 
@@ -16,3 +16,11 @@ batch size = 1
 docker build . -t test_engine
 docker run -it -v ${PWD}:${PWD} -w ${PWD} --gpus all test_engine
 ```
+
+
+References:
+1. https://github.com/microsoft/DeepSpeed-MII/tree/main/examples/benchmark/txt2img
+2. https://github.com/Oneflow-Inc/oneflow
+3. https://github.com/facebookincubator/AITemplate
+4. https://arxiv.org/abs/2304.11267
+5. 
