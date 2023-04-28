@@ -32,3 +32,4 @@ docker run -it -v ${PWD}:${PWD} -w ${PWD} --gpus all test_engine
 4. https://arxiv.org/abs/2304.11267
 5. https://github.com/dbolya/tomesd
 6. https://huggingface.co/docs/diffusers/main/en/optimization/fp16
+7. https://github.com/hidet-org/hidet
