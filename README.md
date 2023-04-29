@@ -27,8 +27,9 @@ docker run -it -v ${PWD}:${PWD} -w ${PWD} --gpus all test_engine
 ## References:
 1. https://github.com/microsoft/DeepSpeed-MII/tree/main/examples/benchmark/txt2img
 2. https://github.com/Oneflow-Inc/oneflow
-3. https://github.com/facebookincubator/AITemplate
-4. https://arxiv.org/abs/2304.11267
-5. https://github.com/dbolya/tomesd
-6. https://huggingface.co/docs/diffusers/main/en/optimization/fp16
-7. https://github.com/hidet-org/hidet
+3. https://github.com/Oneflow-Inc/diffusers
+4. https://github.com/facebookincubator/AITemplate
+5. https://arxiv.org/abs/2304.11267
+6. https://github.com/dbolya/tomesd
+7. https://huggingface.co/docs/diffusers/main/en/optimization/fp16
+8. https://github.com/hidet-org/hidet
