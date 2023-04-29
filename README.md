@@ -12,6 +12,7 @@ batch size = 1, image size 512x512, fp16
 
 
 ## How to run
+VM setup https://gist.github.com/alexeigor/b4c21b5e1fe62d670c433d4ac8c9fd83
 ```
 docker build . -t test_engine
 docker run -it -v ${PWD}:${PWD} -w ${PWD} --gpus all test_engine
