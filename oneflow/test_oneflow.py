@@ -6,7 +6,6 @@ from onediff import OneFlowStableDiffusionPipeline
 from time import perf_counter
 import numpy as np
 
-
 def measure_latency(pipe, prompt):
     latencies = []
     # warm up

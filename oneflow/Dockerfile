@@ -2,9 +2,9 @@
 FROM ubuntu:latest
 
 RUN apt-get update && apt-get install --no-install-recommends -y curl && apt-get -y install git
-RUN apt-get install -y python3-pip
 
-RUN python3 -m pip --no-cache-dir install --upgrade pip
+RUN apt-get update -y && \
+    apt-get install -y python3-pip
 
 WORKDIR /code
 

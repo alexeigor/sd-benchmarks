@@ -1,6 +1,0 @@
-torch
-deepspeed
-triton==2.0.0.dev20221202
-diffusers==0.14.0
-transformers
-accelerate

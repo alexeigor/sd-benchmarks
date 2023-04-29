@@ -6,11 +6,11 @@ batch size = 1
 
 image size 512x512
 
-| GPU                    | PT2.0,fp16,xformers | PT,fp16 | DeepSpeed,fp16 | Oneflow,fp16 |
-| :--------------------- | :-----------        | :-------| :-----         |:-----        |
-| A100-sxm4-40gb         | 2.03 s              | 2.8 s   | 1.28 s         | 1.03 s       |
-| V100, 16gb             | 2.96 s              |         |                |              |
-| T4, 16gb               | 7.83 s              |         |                |              |
+| GPU                    | PT2.0,fp16,xformers   | PT,fp16 | DeepSpeed,fp16   | Oneflow,fp16     |
+| :---                   | :---                  | :---    | :---             | :---             |
+| A100-sxm4-40gb         | 1.96 s (4.54gb VRAM)  | 2.8 s   | 1.28 s (4.97 gb) | 0.98 s (5.62 gb) |
+| V100, 16gb             | 2.96 s                |         |                  |                  |
+| T4, 16gb               | 7.83 s                |         |                  |                  |
 
 
 ## How to run
