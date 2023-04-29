@@ -2,9 +2,7 @@
 
 model: https://huggingface.co/runwayml/stable-diffusion-v1-5
 
-batch size = 1
-
-image size 512x512
+batch size = 1, image size 512x512, fp16
 
 | GPU                    | PT2.0,fp16,xformers   | PT,fp16 | DeepSpeed,fp16   | Oneflow,fp16     |
 | :---                   | :---                  | :---    | :---             | :---             |
