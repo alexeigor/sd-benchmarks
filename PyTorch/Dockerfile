@@ -9,9 +9,7 @@ RUN pip install torch torchvision torchaudio --index-url https://download.pytorc
 
 WORKDIR /code
 
-COPY requirements.txt /code/requirements.txt
-
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install diffusers transformers accelerate xformers
 
 COPY test_pt.py /code/test_pt.py
 
