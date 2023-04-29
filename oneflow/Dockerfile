@@ -8,12 +8,8 @@ RUN apt-get update -y && \
 
 WORKDIR /code
 
-COPY requirements.txt /code/requirements.txt
-
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
-
 RUN python3 -m pip install --pre oneflow -f https://staging.oneflow.info/branch/master/cu117
-RUN python3 -m pip install "torch<2" "transformers>=4.26" "diffusers[torch]==0.14.0"
+RUN python3 -m pip install "torch<2" "transformers>=4.26" "diffusers[torch]==0.15.0"
 RUN python3 -m pip uninstall accelerate -y
 RUN python3 -m pip install -U onediff
 
