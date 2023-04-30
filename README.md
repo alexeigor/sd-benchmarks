@@ -12,7 +12,7 @@ batch size = 1, image size 512x512, fp16
 
 
 ## How to run
-VM setup https://gist.github.com/alexeigor/b4c21b5e1fe62d670c433d4ac8c9fd83
+VM setup https://gist.github.com/alexeigor/b4c21b5e1fe62d670c433d4ac8c9fd83 (Ubuntu, Debian)
 ```
 docker build . -t test_engine
 docker run -it -v ${PWD}:${PWD} -w ${PWD} --gpus all test_engine
@@ -21,15 +21,15 @@ docker run -it -v ${PWD}:${PWD} -w ${PWD} --gpus all test_engine
 ## Optimizations
 1. xFormers
 2. Channels last https://huggingface.co/docs/diffusers/main/en/optimization/fp16#using-channels-last-memory-format
-3. 
 
 
 ## References:
-1. https://github.com/microsoft/DeepSpeed-MII/tree/main/examples/benchmark/txt2img
-2. https://github.com/Oneflow-Inc/oneflow
-3. https://github.com/Oneflow-Inc/diffusers
-4. https://github.com/facebookincubator/AITemplate
-5. https://arxiv.org/abs/2304.11267
-6. https://github.com/dbolya/tomesd
-7. https://huggingface.co/docs/diffusers/main/en/optimization/fp16
-8. https://github.com/hidet-org/hidet
+- https://github.com/microsoft/DeepSpeed-MII/tree/main/examples/benchmark/txt2img
+- https://github.com/Oneflow-Inc/oneflow
+- https://github.com/Oneflow-Inc/diffusers
+- https://github.com/facebookincubator/AITemplate
+- https://arxiv.org/abs/2304.11267
+- https://github.com/dbolya/tomesd
+- https://huggingface.co/docs/diffusers/main/en/optimization/fp16
+- https://github.com/hidet-org/hidet
+- https://github.com/stochasticai/x-stable-diffusion
