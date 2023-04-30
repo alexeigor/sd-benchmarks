@@ -71,5 +71,11 @@ def main():
     baseline_image = pipe_base(prompt, guidance_scale=7.5, generator=generator, num_inference_steps=120).images[0]
     baseline_image.save(f"baseline.png")
 
+    prompt = "a photo of an astronaut riding a horse on mars"
+
+    vanilla_results = measure_latency(pipe_base, prompt)
+
+    print(f"Vanilla pipeline: {vanilla_results[0]}")
+
 if __name__ == "__main__":
     main()
