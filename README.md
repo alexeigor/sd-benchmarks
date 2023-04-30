@@ -11,19 +11,19 @@ batch size = 1, image size 512x512, fp16
 | T4, 16gb               | 7.83 s                |                 |                  |                  |
 
 
-## How to run
-VM setup https://gist.github.com/alexeigor/b4c21b5e1fe62d670c433d4ac8c9fd83 (Ubuntu, Debian)
+### How to run
+Ubuntu, Debian VM setup https://gist.github.com/alexeigor/b4c21b5e1fe62d670c433d4ac8c9fd83
 ```
 docker build . -t test_engine
 docker run -it -v ${PWD}:${PWD} -w ${PWD} --gpus all test_engine
 ```
 
-## Optimizations
+### Optimizations
 1. xFormers
 2. Channels last https://huggingface.co/docs/diffusers/main/en/optimization/fp16#using-channels-last-memory-format
 
 
-## References:
+### References:
 - https://github.com/microsoft/DeepSpeed-MII/tree/main/examples/benchmark/txt2img
 - https://github.com/Oneflow-Inc/oneflow
 - https://github.com/Oneflow-Inc/diffusers
@@ -33,3 +33,4 @@ docker run -it -v ${PWD}:${PWD} -w ${PWD} --gpus all test_engine
 - https://huggingface.co/docs/diffusers/main/en/optimization/fp16
 - https://github.com/hidet-org/hidet
 - https://github.com/stochasticai/x-stable-diffusion
+- https://github.com/microsoft/onnxruntime/tree/main/onnxruntime/python/tools/transformers/models/stable_diffusion
