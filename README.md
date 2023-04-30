@@ -1,4 +1,4 @@
-## Stable Diffusion benchmarks
+## Stable Diffusion inference benchmarks
 
 model: https://huggingface.co/runwayml/stable-diffusion-v1-5
 
