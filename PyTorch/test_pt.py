@@ -3,28 +3,30 @@ import os
 
 from diffusers import DiffusionPipeline
 
-from time import perf_counter
-import numpy as np
-
 @torch.inference_mode()
-def measure_latency(pipe, prompt):
+def benchmark_func(pipe, prompt):
     latencies = []
-    for _ in range(2):
+    for _ in range(5):
         _ =  pipe(prompt)
+
+    # Start benchmark.
+    torch.cuda.synchronize()
+    start_event = torch.cuda.Event(enable_timing=True)
+    end_event = torch.cuda.Event(enable_timing=True)
+    start_event.record()
     # Timed run
-    for _ in range(10):
-        start_time = perf_counter()
+    n_runs = 10
+    for _ in range(n_runs):
         _ = pipe(prompt)
-        latency = perf_counter() - start_time
-        latencies.append(latency)
-    # Compute run statistics
-    time_avg_s = np.mean(latencies)
-    time_std_s = np.std(latencies)
-    time_p95_s = np.percentile(latencies,95)
-    return f"P95 latency (seconds) - {time_p95_s:.2f}; Average latency (seconds) - {time_avg_s:.2f} +\- {time_std_s:.2f};", time_p95_s
+    end_event.record()
+    torch.cuda.synchronize()
+    # in ms
+    time_avg_s = (start_event.elapsed_time(end_event)) / n_runs
+    return time_avg_s
+
 
 def main():
-    prompt = "a dog on a rocket"
+    prompt = "a photo of an astronaut riding a horse on mars"
 
     model = "runwayml/stable-diffusion-v1-5"
     pipe_base = DiffusionPipeline.from_pretrained(model, torch_dtype=torch.half).to("cuda")
@@ -32,11 +34,9 @@ def main():
     baseline_image = pipe_base(prompt, guidance_scale=7.5).images[0]
     baseline_image.save(f"baseline.png")
 
-    prompt = "a photo of an astronaut riding a horse on mars"
+    latency_ms = benchmark_func(pipe_base, prompt)
 
-    vanilla_results = measure_latency(pipe_base, prompt)
-
-    print(f"Vanilla pipeline: {vanilla_results[0]}")
+    print(f"Pipeline latency: {latency_ms:.2f}")
 
 if __name__ == "__main__":
     main()
