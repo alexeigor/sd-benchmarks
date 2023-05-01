@@ -34,3 +34,4 @@ docker run -it -v ${PWD}:${PWD} -w ${PWD} --gpus all test_engine
 - https://github.com/hidet-org/hidet
 - https://github.com/stochasticai/x-stable-diffusion
 - https://github.com/microsoft/onnxruntime/tree/main/onnxruntime/python/tools/transformers/models/stable_diffusion
+- https://github.com/microsoft/Olive
