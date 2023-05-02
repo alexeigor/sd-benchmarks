@@ -35,3 +35,4 @@ docker run -it -v ${PWD}:${PWD} -w ${PWD} --gpus all test_engine
 - https://github.com/stochasticai/x-stable-diffusion
 - https://github.com/microsoft/onnxruntime/tree/main/onnxruntime/python/tools/transformers/models/stable_diffusion
 - https://github.com/microsoft/Olive
+- https://github.com/NVIDIA/TensorRT/tree/main/demo/Diffusion (kudos to Denis Timonin https://www.linkedin.com/in/denistimonin/)
