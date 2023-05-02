@@ -18,8 +18,8 @@ def benchmark_func(pipe, prompt):
     n_runs = 10
     for _ in range(n_runs):
         _ = pipe(prompt)
-    end_event.record()
     torch.cuda.synchronize()
+    end_event.record()
     # in ms
     time_avg_s = (start_event.elapsed_time(end_event)) / n_runs
     return time_avg_s
