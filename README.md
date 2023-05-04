@@ -2,7 +2,7 @@
 
 model: https://huggingface.co/runwayml/stable-diffusion-v1-5
 
-batch size = 1, image size 512x512, fp16
+batch size = 1, image size 512x512, 50 iterations, fp16
 
 **A100-SXM4-40GB**
 | Engine                 | Time                  |
