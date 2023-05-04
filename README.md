@@ -8,6 +8,7 @@ batch size = 1, image size 512x512, fp16
 | Engine                 | Time                  |
 | :---                   | :---                  |
 | PT2.0,fp16,xformers    | 1.96 s (4.54gb VRAM)  |
+| PT2.0,fp16 + compile*  |                       |
 | AITemplate,fp16        | 1.01 s (4.06 gb)      |
 | DeepSpeed,fp16         | 1.28 s (4.97 gb)      |
 | Oneflow,fp16           | 0.98 s (5.62 gb)      |
@@ -23,11 +24,10 @@ batch size = 1, image size 512x512, fp16
 | PT2.0,fp16,xformers    | 1.44 s                |
 
 **V100, T4**
-| GPU                    | PT2.0,fp16,xformers   | AITemplate,fp16 | DeepSpeed,fp16   | Oneflow,fp16     |
-| :---                   | :---                  | :---            | :---             | :---             |
-| A100-sxm4-40gb         | 1.96 s (4.54gb VRAM)  | 1.01 s (4.06 gb)| 1.28 s (4.97 gb) | 0.98 s (5.62 gb) |
-| V100, 16gb             | 2.96 s                |                 |                  |                  |
-| T4, 16gb               | 7.83 s                |                 |                  |                  |
+| GPU                    | PT2.0,fp16,xformers   | 
+| :---                   | :---                  | 
+| V100, 16gb             | 2.96 s                | 
+| T4, 16gb               | 7.83 s                | 
 
 ## How to run
 Ubuntu, Debian VM setup https://gist.github.com/alexeigor/b4c21b5e1fe62d670c433d4ac8c9fd83
