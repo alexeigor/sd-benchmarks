@@ -5,11 +5,11 @@ RUN apt-get update -y && \
     apt-get -y install git && \
     apt-get install -y python3-pip
     
-RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+RUN pip install --pre torch --index-url https://download.pytorch.org/whl/nightly/cu118
 
 WORKDIR /code
 
-RUN pip install diffusers transformers accelerate xformers
+RUN pip install git+https://github.com/huggingface/diffusers@fix_torch_compile transformers accelerate
 
 COPY test_pt.py /code/test_pt.py
 
