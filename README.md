@@ -7,8 +7,8 @@ batch size = 1, image size 512x512, 50 iterations, fp16
 **A100-SXM4-40GB**
 | Engine                 | Time                  |
 | :---                   | :---                  |
-| PT2.0,fp16,xformers    | 1.96 s (4.54gb VRAM)  |
-| PT2.0,fp16 + compile*  |                       |
+| PT2.0,fp16             | 1.96 s (4.54gb VRAM)  |
+| PT2.0,fp16 + compile   | 1.41 s (5.96 gb)      |
 | AITemplate,fp16        | 1.01 s (4.06 gb)      |
 | DeepSpeed,fp16         | 1.28 s (4.97 gb)      |
 | Oneflow,fp16           | 0.98 s (5.62 gb)      |
@@ -35,11 +35,6 @@ Ubuntu, Debian VM setup https://gist.github.com/alexeigor/b4c21b5e1fe62d670c433d
 docker build . -t test_engine
 docker run -it -v ${PWD}:${PWD} -w ${PWD} --gpus all test_engine
 ```
-
-## Optimizations
-1. xFormers
-2. Channels last https://huggingface.co/docs/diffusers/main/en/optimization/fp16#using-channels-last-memory-format
-
 
 ## References:
 - https://github.com/microsoft/DeepSpeed-MII/tree/main/examples/benchmark/txt2img
