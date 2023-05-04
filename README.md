@@ -12,6 +12,9 @@ batch size = 1, image size 512x512, fp16
 | DeepSpeed,fp16         | 1.28 s (4.97 gb)      |
 | Oneflow,fp16           | 0.98 s (5.62 gb)      |
 | TensorRT 8.6, fp16     |                       |
+| Onnxruntime, CUDA      |                       |
+| Onnxruntime, TensorRT  |                       |
+
 
 **H100 PCIe, 80GB**
 
