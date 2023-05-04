@@ -11,7 +11,7 @@ batch size = 1, image size 512x512, fp16
 | AITemplate,fp16        | 1.01 s (4.06 gb)      |
 | DeepSpeed,fp16         | 1.28 s (4.97 gb)      |
 | Oneflow,fp16           | 0.98 s (5.62 gb)      |
-| TensorRT 8.6, fp16     |                       |
+| TensorRT 8.6, fp16     | 0.98 s                |
 | Onnxruntime, CUDA      |                       |
 | Onnxruntime, TensorRT  |                       |
 
