@@ -17,4 +17,4 @@ RUN pip install tensorrt
 RUN pip install --extra-index-url https://pypi.ngc.nvidia.com colored cuda-python ftfy matplotlib nvtx onnx onnx-graphsurgeon==0.3.26 polygraphy==0.44.2 scipy
 RUN pip install accelerate "torch<2.0.0" diffusers transformers
 
-CMD python3 /code/TensorRT/demo/Diffusion/demo_txt2img.py "a beautiful photograph of Mt. Fuji during cherry blossom" --onnx-dir ./onnx --engine-dir ./engine --output-dir ./output
+CMD python3 /code/TensorRT/demo/Diffusion/demo_txt2img.py "a beautiful photograph of Mt. Fuji during cherry blossom" --version 1.5 --onnx-dir ./onnx --engine-dir ./engine --output-dir ./output
