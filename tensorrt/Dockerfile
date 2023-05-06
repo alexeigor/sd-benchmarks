@@ -6,24 +6,15 @@ RUN apt-get update -y && \
     apt-get install -y python3-pip && \
     pip install --upgrade pip
 
-RUN pip install tensorrt
-    
-# RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-
 WORKDIR /code
 
 RUN git clone https://github.com/NVIDIA/TensorRT.git
 
-WORKDIR /code/TensorRT/demo/Diffusion/
+# RUN pip install -r TensorRT/demo/Diffusion/requirements.txt
+# RUN mkdir -p onnx engine
+RUN pip install tensorrt
 
-RUN pip install -r ./requirements.txt
-RUN mkdir -p onnx engine output
+RUN pip install --extra-index-url https://pypi.ngc.nvidia.com colored cuda-python ftfy matplotlib nvtx onnx onnx-graphsurgeon==0.3.26 polygraphy==0.44.2 scipy
+RUN pip install accelerate "torch<2.0.0" diffusers transformers
 
-CMD cd /code/TensorRT/demo/Diffusion && python3 demo_txt2img.py "a beautiful photograph of Mt. Fuji during cherry blossom"
-
-
-## RUN pip install onnxruntime-gpu>=1.14 py3nvml xformers
-
-## COPY benchmark.py /code/benchmark.py
-
-## CMD python3 benchmark.py --engine torch --batch_size 1 --batch_count 5
+CMD python3 /code/TensorRT/demo/Diffusion/demo_txt2img.py "a beautiful photograph of Mt. Fuji during cherry blossom" --onnx-dir ./onnx --engine-dir ./engine --output-dir ./output
