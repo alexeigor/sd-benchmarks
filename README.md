@@ -9,7 +9,7 @@ batch size = 1, image size 512x512, 50 iterations, fp16
 
 **A100-SXM4-40GB**
 | Engine                 | Time, sd1.5           | Time, sd2.1           | 
-| :---                   | :---                  |                       |
+| :---                   | :---                  | :---                  |
 | PT2.0,fp16             | 1.96 s (4.54gb VRAM)  |                       |
 | PT2.0,fp16 + compile   | 1.41 s (5.96 gb)      |                       |
 | AITemplate,fp16        | 1.01 s (4.06 gb)      |                       |
@@ -23,7 +23,7 @@ batch size = 1, image size 512x512, 50 iterations, fp16
 **H100 PCIe, 80GB**
 
 | Engine                 | Time, sd1.5           | Time, sd2.1           | 
-| :---                   | :---                  |                       |
+| :---                   | :---                  | :---                  |
 | PT2.0,fp16             | 1.44 s                |                       |
 | PT2.0,fp16,compile     | 1.11 s                |                       |
 | TensorRT 8.6.1, fp16   | 0.75 s                | 0.68 s                |
