@@ -22,6 +22,8 @@ batch size = 1, image size 512x512, 50 iterations, fp16
 | Engine                 | time                  |
 | :---                   | :---                  |
 | PT2.0,fp16             | 1.44 s                |
+| PT2.0,fp16,compile     | 1.11 s                |
+
 
 **V100, T4**
 | GPU                    | PT2.0,fp16,xformers   | 
