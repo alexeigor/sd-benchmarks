@@ -3,6 +3,7 @@
 model: 
 
 https://huggingface.co/runwayml/stable-diffusion-v1-5 - sd1.5
+
 https://huggingface.co/stabilityai/stable-diffusion-2-1 - sd2.1
 
 batch size = 1, image size 512x512, 50 iterations, fp16
