@@ -27,6 +27,8 @@ batch size = 1, image size 512x512, 50 iterations, fp16
 | PT2.0,fp16             | 1.44 s                |                       |
 | PT2.0,fp16,compile     | 1.11 s                |                       |
 | TensorRT 8.6.1, fp16   | 0.75 s                | 0.68 s                |
+| Jax,XLA, fp16          | 1.18 s                |                       |
+
 
 
 
