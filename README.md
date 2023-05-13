@@ -18,6 +18,7 @@ batch size = 1, image size 512x512, 50 iterations, fp16
 | Oneflow,fp16           | 0.98 s (5.62 gb)      |                       |
 | TensorRT 8.6.1, fp16   | 0.98 s                | 0.90 s                |
 | Onnxruntime,fp16,CUDA  | 1.05 s                | 1.00 s                |
+| Jax,XLA, fp16          |                       | 1.35 s                |
 
 **H100 PCIe, 80GB**
 
