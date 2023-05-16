@@ -2,9 +2,7 @@ FROM nvcr.io/nvidia/pytorch:23.02-py3
 # custom torch 1.14 build that supports H100
 
 RUN apt-get update -y && \
-    apt-get install --no-install-recommends -y curl && \
-    apt-get -y install git && \
-    apt-get install -y python3-pip && \
+    apt-get install --no-install-recommends -y git curl python3-pip && \
     pip install --upgrade pip
 
 WORKDIR /code

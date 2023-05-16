@@ -1,9 +1,7 @@
 FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
 
 RUN apt-get update -y && \
-    apt-get install --no-install-recommends -y curl && \
-    apt-get -y install git && \
-    apt-get install -y python3-pip
+    apt-get install --no-install-recommends -y git curl python3-pip
 
 RUN pip install torch --index-url https://download.pytorch.org/whl/cu118
 
