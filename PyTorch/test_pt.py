@@ -1,31 +1,34 @@
-import torch
 import os
+os.environ['HF_HOME']='/workspace/.cache/huggingface'
 
+import time
+import numpy as np
+
+import torch
 from diffusers import DiffusionPipeline
 
 # @torch.inference_mode()
 def benchmark_func(pipe, compiled, prompt):
-    latencies = []
     for _ in range(5):
         _ =  pipe(prompt)
-
     # Start benchmark.
     torch.cuda.synchronize()
-    start_event = torch.cuda.Event(enable_timing=True)
-    end_event = torch.cuda.Event(enable_timing=True)
-    start_event.record()
+
     # Timed run
     n_runs = 10
+    latencies = []
     for _ in range(n_runs):
+        start = time.perf_counter()
         if not compiled:
             with torch.inference_mode():
                 _ = pipe(prompt)
         else:
             _ = pipe(prompt)
-    torch.cuda.synchronize()
-    end_event.record()
-    # in ms
-    time_avg_s = (start_event.elapsed_time(end_event)) / n_runs
+        torch.cuda.synchronize()
+        end = time.perf_counter() - start
+        latencies.append(end)
+    
+    time_avg_s = np.average(latencies)
     return time_avg_s
 
 run_compile = False  # Set True / False
@@ -33,7 +36,8 @@ run_compile = False  # Set True / False
 def main():
     prompt = "a photo of an astronaut riding a horse on mars"
 
-    model = "runwayml/stable-diffusion-v1-5"
+    # model = "runwayml/stable-diffusion-v1-5"
+    model = "stabilityai/stable-diffusion-2-1"
     pipe_base = DiffusionPipeline.from_pretrained(model, torch_dtype=torch.half).to("cuda")
     if run_compile:
         print("Run torch compile")
@@ -41,6 +45,8 @@ def main():
 
     baseline_image = pipe_base(prompt, guidance_scale=7.5).images[0]
     baseline_image.save(f"baseline.png")
+
+    prompt = "a beautiful photograph of Mt. Fuji during cherry blossom"
 
     latency_ms = benchmark_func(pipe_base, run_compile, prompt)
 

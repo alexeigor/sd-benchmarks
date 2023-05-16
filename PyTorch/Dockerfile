@@ -9,7 +9,7 @@ RUN pip install --pre torch --index-url https://download.pytorch.org/whl/nightly
 
 WORKDIR /code
 
-RUN pip install git+https://github.com/huggingface/diffusers@fix_torch_compile transformers accelerate
+RUN pip install git+https://github.com/huggingface/diffusers transformers accelerate
 
 COPY test_pt.py /code/test_pt.py
 

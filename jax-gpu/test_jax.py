@@ -1,4 +1,5 @@
 import os
+os.environ['HF_HOME']='/workspace/.cache/huggingface'
 
 import numpy as np
 import jax
@@ -14,7 +15,7 @@ from diffusers import FlaxStableDiffusionPipeline
 
 import time
 
-os.environ['XLA_FLAGS']='--xla_dump_to=./'
+os.environ['XLA_FLAGS']='--xla_dump_to=/workspace/xla_dump/'
 
 def benchmark_func(pipeline, prompts, p_params, rng):
     for _ in range(5):
@@ -45,9 +46,12 @@ def main():
     print(f"Found {num_devices} JAX devices of type {device_type}.")
 
     dtype = jnp.bfloat16
+    
+    model = "runwayml/stable-diffusion-v1-5"
+    # model = "stabilityai/stable-diffusion-2-1"
 
     pipeline, params = FlaxStableDiffusionPipeline.from_pretrained(
-        "CompVis/stable-diffusion-v1-4",
+        model,
         revision="bf16",
         dtype=dtype,
     )
