@@ -38,7 +38,7 @@ def benchmark_func(pipeline, prompts, p_params, rng):
     time_avg_s = np.average(latencies)
     return time_avg_s
 
-    
+
 def main():
     num_devices = jax.device_count()
     device_type = jax.devices()[0].device_kind
@@ -46,9 +46,9 @@ def main():
     print(f"Found {num_devices} JAX devices of type {device_type}.")
 
     dtype = jnp.bfloat16
-    
-    model = "runwayml/stable-diffusion-v1-5"
-    # model = "stabilityai/stable-diffusion-2-1"
+
+    # model = "runwayml/stable-diffusion-v1-5"
+    model = "stabilityai/stable-diffusion-2-1"
 
     pipeline, params = FlaxStableDiffusionPipeline.from_pretrained(
         model,
@@ -59,7 +59,7 @@ def main():
     prompt = "A cinematic film still of Morgan Freeman starring as Jimi Hendrix, portrait, 40mm lens, shallow depth of field, close up, split lighting, cinematic"
     prompt = [prompt] * jax.device_count()
     prompt_ids = pipeline.prepare_inputs(prompt)
-    
+
     p_params = replicate(params)
     prompt_ids = shard(prompt_ids)
 

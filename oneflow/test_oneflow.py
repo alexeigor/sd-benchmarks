@@ -7,16 +7,19 @@ from time import perf_counter
 import numpy as np
 
 def measure_latency(pipe, prompt):
-    latencies = []
     # warm up
     # pipe.set_progress_bar_config(disable=True)
     for _ in range(2):
         _ =  pipe(prompt)
+    flow.cuda.synchronize()
+
     # Timed run
+    latencies = []
     for _ in range(10):
         start_time = perf_counter()
         with flow.autocast("cuda"):
             _ = pipe(prompt)
+        flow.cuda.synchronize()
         latency = perf_counter() - start_time
         latencies.append(latency)
     # Compute run statistics
