@@ -8,7 +8,7 @@ https://huggingface.co/stabilityai/stable-diffusion-2-1 - sd2.1
 
 batch size = 1, image size 512x512, 50 iterations, fp16
 
-**A100-SXM4-40GB**
+#### A100-SXM4-40GB
 | Engine                 | Time, sd1.5           | Time, sd2.1           | 
 | :---                   | :---                  | :---                  |
 | PT2.0,fp16             | 1.96 s (4.54gb VRAM)  |                       |
@@ -20,7 +20,7 @@ batch size = 1, image size 512x512, 50 iterations, fp16
 | Onnxruntime,fp16,CUDA  | 1.05 s                | 1.00 s                |
 | Jax,XLA, fp16          | 1.58 s                | 1.35 s                |
 
-**H100 PCIe, 80GB**
+#### H100 PCIe, 80GB
 
 | Engine                 | Time, sd1.5           | Time, sd2.1           | 
 | :---                   | :---                  | :---                  |
@@ -29,10 +29,7 @@ batch size = 1, image size 512x512, 50 iterations, fp16
 | TensorRT 8.6.1, fp16   | 0.75 s                | 0.68 s                |
 | Jax,XLA, fp16          | 1.18 s                |                       |
 
-
-
-
-**V100, T4**
+#### V100, T4
 | GPU                    | PT2.0,fp16,xformers   | 
 | :---                   | :---                  | 
 | V100, 16gb             | 2.96 s                | 
