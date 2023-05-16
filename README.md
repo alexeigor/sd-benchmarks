@@ -29,6 +29,14 @@ batch size = 1, image size 512x512, 50 iterations, fp16
 | TensorRT 8.6.1, fp16   | 0.75 s                | 0.68 s                |
 | Jax,XLA, fp16          | 1.18 s                |                       |
 
+#### H100-SXM, 80GB
+| Engine                 | Time, sd1.5           | Time, sd2.1           | 
+| :---                   | :---                  | :---                  |
+| PT2.0,fp16             | 1.00 s                | 1.72 s                |
+| PT2.0,fp16,compile     | 0.89 s                | 1.44 s                |
+| TensorRT 8.6.1, fp16   | 0.60 s                | 0.58 s                |
+| Jax,XLA, fp16          | 1.00 s                | 0.79 s                |
+
 #### V100, T4
 | GPU                    | PT2.0,fp16,xformers   | 
 | :---                   | :---                  | 
