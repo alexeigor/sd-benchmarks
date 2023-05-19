@@ -31,22 +31,24 @@ def benchmark_func(pipe, compiled, prompt):
     time_avg_s = np.average(latencies)
     return time_avg_s
 
-run_compile = False  # Set True / False
+run_compile = True  # Set True / False
 
 def main():
-    prompt = "a photo of an astronaut riding a horse on mars"
+    batch_size = 1
+    prompt = ["a photo of an astronaut riding a horse on mars"] * batch_size
 
-    # model = "runwayml/stable-diffusion-v1-5"
-    model = "stabilityai/stable-diffusion-2-1"
+    model = "runwayml/stable-diffusion-v1-5"
+    # model = "stabilityai/stable-diffusion-2-1"
     pipe_base = DiffusionPipeline.from_pretrained(model, torch_dtype=torch.half).to("cuda")
     if run_compile:
         print("Run torch compile")
         pipe_base.unet = torch.compile(pipe_base.unet, mode="reduce-overhead", fullgraph=True)
 
     baseline_image = pipe_base(prompt, guidance_scale=7.5).images[0]
-    baseline_image.save(f"baseline.png")
+    # for idx, im in enumerate(baseline_image):
+    #    im.save(f"{idx:06}.jpg")
 
-    prompt = "a beautiful photograph of Mt. Fuji during cherry blossom"
+    prompt = ["a beautiful photograph of Mt. Fuji during cherry blossom"] * batch_size
 
     latency_ms = benchmark_func(pipe_base, run_compile, prompt)
 

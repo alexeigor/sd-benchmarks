@@ -1,19 +1,19 @@
-FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
+FROM nvcr.io/nvidia/pytorch:23.02-py3
+# custom torch 1.14 build that supports H100
 
 RUN apt-get update -y && \
-    apt-get install --no-install-recommends -y curl && \
-    apt-get -y install git && \
-    apt-get install -y python3-pip
-    
-RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+    apt-get install --no-install-recommends -y git curl python3-pip
 
 WORKDIR /code
 
-RUN pip install diffusers==0.15.1 transformers==4.26.0 numpy==1.24.1 accelerate==0.15.0 \
-    onnx==1.13.0 coloredlogs packaging==23.0 protobuf==3.20.3 psutil==5.9.4 sympy==1.11.1
+RUN pip install torch==1.13.1+cu117 --extra-index-url https://download.pytorch.org/whl/cu117
 
-RUN pip install onnxruntime-gpu>=1.14 py3nvml xformers
+RUN git clone https://github.com/microsoft/onnxruntime
+RUN pip install -r /code/onnxruntime/onnxruntime/python/tools/transformers/models/stable_diffusion/requirements-cuda.txt
 
-COPY benchmark.py /code/benchmark.py
+RUN curl https://raw.githubusercontent.com/huggingface/diffusers/v0.15.1/scripts/convert_stable_diffusion_checkpoint_to_onnx.py > /code/convert_sd_onnx.py
 
-CMD python3 benchmark.py --engine torch --batch_size 1 --batch_count 5
+CMD python3 /code/convert_sd_onnx.py --model_path runwayml/stable-diffusion-v1-5  --output_path  ./sd_v1_5/fp32 && \
+    python3 /code/onnxruntime/onnxruntime/python/tools/transformers/models/stable_diffusion/optimize_pipeline.py -i ./sd_v1_5/fp32 -o ./sd_v1_5/fp16 --float16 && \
+    python3 /code/onnxruntime/onnxruntime/python/tools/transformers/models/stable_diffusion/benchmark.py -p ./sd_v1_5/fp16 -b 1 -v 1.5
+
