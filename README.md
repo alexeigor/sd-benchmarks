@@ -45,8 +45,11 @@ batch size = 1, image size 512x512, 50 iterations
 
 ## How to run
 Ubuntu, Debian VM setup https://gist.github.com/alexeigor/b4c21b5e1fe62d670c433d4ac8c9fd83
-```
+```bash
 docker build . -t test_engine
+```
+
+```bash
 docker run -it -v ${PWD}/workspace:/workspace -w /workspace --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 test_engine
 ```
 
