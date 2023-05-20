@@ -1,9 +1,8 @@
 FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
 
 RUN apt-get update -y && \
-    apt-get install --no-install-recommends -y curl && \
-    apt-get -y install git && \
-    apt-get install -y python3-pip
+    apt-get install --no-install-recommends -y git curl python3-dev python3-pip && \
+    pip install --upgrade pip
     
 RUN pip install --pre torch --index-url https://download.pytorch.org/whl/nightly/cu118
 
@@ -13,4 +12,4 @@ RUN pip install git+https://github.com/huggingface/diffusers transformers accele
 
 COPY test_pt.py /code/test_pt.py
 
-CMD [ "python3", "/code/test_pt.py"]
+CMD python3 /code/test_pt.py
