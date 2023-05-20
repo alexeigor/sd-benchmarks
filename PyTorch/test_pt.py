@@ -37,8 +37,8 @@ def main():
     batch_size = 1
     prompt = ["a photo of an astronaut riding a horse on mars"] * batch_size
 
-    # model = "runwayml/stable-diffusion-v1-5"
-    model = "stabilityai/stable-diffusion-2-1"
+    model = "runwayml/stable-diffusion-v1-5"
+    # model = "stabilityai/stable-diffusion-2-1"
     pipe_base = DiffusionPipeline.from_pretrained(model, torch_dtype=torch.float16).to("cuda")
     if run_compile:
         print("Run torch compile")

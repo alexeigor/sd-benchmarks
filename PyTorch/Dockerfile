@@ -1,10 +1,11 @@
-FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
+FROM nvcr.io/nvidia/pytorch:23.04-py3
+# https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/index.html
 
 RUN apt-get update -y && \
     apt-get install --no-install-recommends -y git curl python3-dev python3-pip && \
     pip install --upgrade pip
     
-RUN pip install --pre torch --index-url https://download.pytorch.org/whl/nightly/cu118
+# RUN pip install --pre torch --index-url https://download.pytorch.org/whl/nightly/cu118
 
 WORKDIR /code
 
