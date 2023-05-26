@@ -24,23 +24,28 @@ def benchmark_func(pipe, prompt):
         torch.cuda.synchronize()
         end = time.perf_counter_ns() - start
         latencies.append(end)
-    
+
     time_avg_s = np.average(latencies)
-    return time_avg_s
+    return int(time_avg_s / 1000000.0)
 
 def main():
+    model_id = "runwayml/stable-diffusion-v1-5"
     # Use the DDIMScheduler scheduler here instead
-    scheduler = DDIMScheduler.from_pretrained("stabilityai/stable-diffusion-2-1",
+    scheduler = DDIMScheduler.from_pretrained(model_id,
                                                 subfolder="scheduler")
 
-    pipe = StableDiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-2-1",
+    pipe = StableDiffusionPipeline.from_pretrained(model_id,
                                                     custom_pipeline="stable_diffusion_tensorrt_txt2img",
                                                     revision='fp16',
                                                     torch_dtype=torch.float16,
-                                                    scheduler=scheduler,)
+                                                    scheduler=scheduler,
+                                                    image_height=512,
+                                                    image_width=512,
+                                                    max_batch_size=1
+                                                    )
 
     # re-use cached folder to save ONNX models and TensorRT Engines
-    pipe.set_cached_folder("stabilityai/stable-diffusion-2-1", revision='fp16',)
+    pipe.set_cached_folder(model_id, revision='fp16',)
 
     pipe = pipe.to("cuda")
 
@@ -52,7 +57,7 @@ def main():
 
     latency_ms = benchmark_func(pipe, prompt)
 
-    print("Pipeline latency:", latency_ms)
+    print("Pipeline latency:", latency_ms, "ms")
 
 
 if __name__ == "__main__":

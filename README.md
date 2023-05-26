@@ -9,16 +9,16 @@ https://huggingface.co/stabilityai/stable-diffusion-2-1 - sd2.1
 batch size = 1, image size 512x512, 50 iterations
 
 #### A100-SXM, 40GB
-| Engine                 | Time, sd1.5           | Time, sd2.1           | 
-| :---                   | :---                  | :---                  |
-| PT2.0,fp16             | 1.96 s (4.54gb VRAM)  |                       |
-| PT2.0,fp16 + compile   | 1.41 s (5.96 gb)      |                       |
-| AITemplate,fp16        | 1.01 s (4.06 gb)      |                       |
-| DeepSpeed,fp16         | 1.28 s (4.97 gb)      |                       |
-| Oneflow,fp16           | 0.98 s (5.62 gb)      |                       |
-| TensorRT 8.6.1, fp16   | 0.98 s                | 0.90 s                |
-| Onnxruntime,fp16,CUDA  | 1.05 s                | 1.00 s                |
-| Jax,XLA,bf16           | 1.58 s                | 1.35 s                |
+| Engine                 | Time, sd1.5           | Time, sd2.1           | Time, sd2.1, 768x768  | 
+| :---                   | :---                  | :---                  | :---                  |
+| PT2.0,fp16             | 1.96 s (4.54gb VRAM)  |                       |                       |
+| PT2.0,fp16 + compile   | 1.41 s (5.96 gb)      |                       |                       |
+| AITemplate,fp16        | 1.01 s (4.06 gb)      |                       |                       |
+| DeepSpeed,fp16         | 1.28 s (4.97 gb)      |                       |                       |
+| Oneflow,fp16           | 0.98 s (5.62 gb)      |                       |                       |
+| TensorRT 8.6.1, fp16   | 0.98 s                | 0.90 s                | 1.98 s                |
+| Onnxruntime,fp16,CUDA  | 1.05 s                | 1.00 s                |                       |
+| Jax,XLA,bf16           | 1.58 s                | 1.35 s                |                       |
 
 #### H100-PCIe, 80GB
 
