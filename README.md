@@ -37,7 +37,7 @@ batch size = 1, image size 512x512, 50 iterations
 | TensorRT 8.6.1,fp16    | 0.60 s                | 0.58 s                |
 | Jax,XLA,bf16           | 1.00 s                | 0.79 s                |
 
-#### RTX 4090, 
+#### RTX 4090, 24GB
 | Engine                 | Time, sd1.5           | Time, sd2.1           | Time, sd2.1, 768x768  | 
 | :---                   | :---                  | :---                  | :---                  |
 | TensorRT 8.6.1, fp16   | 0.745 s               | 0.681 s               | 1.524 s               |
