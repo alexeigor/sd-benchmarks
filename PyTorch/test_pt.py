@@ -7,10 +7,12 @@ import numpy as np
 import torch
 from diffusers import DiffusionPipeline
 
+sd_args = {"width": 768, "height": 768, "guidance_scale": 7.5}
+
 # @torch.inference_mode()
 def benchmark_func(pipe, compiled, prompt):
     for _ in range(5):
-        _ =  pipe(prompt)
+        _ =  pipe(prompt, **sd_args)
     # Start benchmark.
     torch.cuda.synchronize()
 
@@ -21,9 +23,9 @@ def benchmark_func(pipe, compiled, prompt):
         start = time.perf_counter_ns()
         if not compiled:
             with torch.inference_mode():
-                _ = pipe(prompt)
+                _ = pipe(prompt, **sd_args)
         else:
-            _ = pipe(prompt)
+            _ = pipe(prompt, **sd_args)
         torch.cuda.synchronize()
         end = time.perf_counter_ns() - start
         latencies.append(end)
@@ -37,14 +39,14 @@ def main():
     batch_size = 1
     prompt = ["a photo of an astronaut riding a horse on mars"] * batch_size
 
-    model = "runwayml/stable-diffusion-v1-5"
-    # model = "stabilityai/stable-diffusion-2-1"
+    # model = "runwayml/stable-diffusion-v1-5"
+    model = "stabilityai/stable-diffusion-2-1"
     pipe_base = DiffusionPipeline.from_pretrained(model, torch_dtype=torch.float16).to("cuda")
     if run_compile:
         print("Run torch compile")
         pipe_base.unet = torch.compile(pipe_base.unet, mode="reduce-overhead", fullgraph=True)
 
-    baseline_image = pipe_base(prompt, guidance_scale=7.5).images
+    baseline_image = pipe_base(prompt, **sd_args).images
     for idx, im in enumerate(baseline_image):
         im.save(f"{idx:06}.jpg")
 
