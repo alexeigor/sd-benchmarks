@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/pytorch:23.02-py3
+FROM nvcr.io/nvidia/pytorch:23.06-py3
 # custom torch 1.14 build that supports H100
 
 RUN apt-get update -y && \
