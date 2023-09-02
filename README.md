@@ -12,7 +12,7 @@ batch size = 1, image size 512x512, 50 iterations
 | Engine                 | Time, sd1.5           | Time, sd2.1           | Time, sd2.1, 768x768  | 
 | :---                   | :---                  | :---                  | :---                  |
 | PT2.0,fp16             | 1.96 s (4.54gb VRAM)  |                       |                       |
-| PT2.0,fp16 + compile   | 1.41 s (5.96 gb)      |                       |                       |
+| PT2.0,fp16 + compile   | 1.41 s (5.96 gb)      |                       | 2.37 s                |
 | AITemplate,fp16        | 1.01 s (4.06 gb)      |                       |                       |
 | DeepSpeed,fp16         | 1.28 s (4.97 gb)      |                       |                       |
 | Oneflow,fp16           | 0.98 s (5.62 gb)      |                       |                       |
