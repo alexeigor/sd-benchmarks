@@ -37,7 +37,7 @@ run_compile = True  # Set True / False
 
 def main():
     batch_size = 1
-    prompt = ["a photo of an astronaut riding a horse on mars"] * batch_size
+    prompt = ["A majestic lion jumping from a big stone at night"] * batch_size
 
     # model = "runwayml/stable-diffusion-v1-5"
     model = "stabilityai/stable-diffusion-2-1"
@@ -50,7 +50,7 @@ def main():
     for idx, im in enumerate(baseline_image):
         im.save(f"{idx:06}.jpg")
 
-    prompt = ["a beautiful photograph of Mt. Fuji during cherry blossom"] * batch_size
+    prompt = ["A majestic lion jumping from a big stone at night"] * batch_size
 
     latency_ms = benchmark_func(pipe_base, run_compile, prompt)
 
