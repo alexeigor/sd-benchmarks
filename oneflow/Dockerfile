@@ -1,16 +1,14 @@
-FROM ubuntu:latest
-
-RUN apt-get update -y && \
-    apt-get install --no-install-recommends -y curl && \
-    apt-get -y install git && \
-    apt-get install -y python3-pip
+FROM nvcr.io/nvidia/pytorch:23.08-py3
 
 WORKDIR /code
 
-RUN python3 -m pip install --pre oneflow -f https://staging.oneflow.info/branch/master/cu117
-RUN python3 -m pip install "torch<2" "transformers>=4.26" "diffusers[torch]==0.15.0"
-RUN python3 -m pip uninstall accelerate -y
-RUN python3 -m pip install -U onediff
+RUN pip install --pre oneflow -f https://oneflow-staging.oss-cn-beijing.aliyuncs.com/branch/master/cu117
+# RUN pip install -f https://oneflow-staging.oss-cn-beijing.aliyuncs.com/branch/master/cu117 oneflow
+
+RUN python3 -m pip install "torch" "transformers==4.27.1" "diffusers[torch]==0.19.3" && \
+    python3 -m pip uninstall accelerate -y && \
+    git clone https://github.com/Oneflow-Inc/diffusers.git onediff && \
+    python3 -m pip install -e /code/onediff
 
 COPY test_oneflow.py /code/test_oneflow.py
 
