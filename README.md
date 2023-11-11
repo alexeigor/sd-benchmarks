@@ -1,4 +1,4 @@
-## Stable Diffusion inference benchmarks
+## Stable Diffusion XL inference benchmarks
 
 model: 
 
