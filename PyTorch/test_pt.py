@@ -7,7 +7,10 @@ import numpy as np
 import torch
 from diffusers import DiffusionPipeline
 
-sd_args = {"width": 768, "height": 768, "guidance_scale": 7.5}
+sd_args_v15 = {"_model_id_": "runwayml/stable-diffusion-v1-5", "width": 512, "height": 512, "guidance_scale": 7.5, "num_inference_steps": 50}
+sd_args_v21 = {"_model_id_": "stabilityai/stable-diffusion-2-1", "width": 768, "height": 768, "guidance_scale": 7.5, "num_inference_steps": 50}
+
+sd_args = sd_args_v15
 
 # @torch.inference_mode()
 def benchmark_func(pipe, compiled, prompt):
@@ -39,9 +42,11 @@ def main():
     batch_size = 1
     prompt = ["A majestic lion jumping from a big stone at night"] * batch_size
 
-    # model = "runwayml/stable-diffusion-v1-5"
-    model = "stabilityai/stable-diffusion-2-1"
-    pipe_base = DiffusionPipeline.from_pretrained(model, torch_dtype=torch.float16).to("cuda")
+    pipe_base = DiffusionPipeline.from_pretrained(
+            sd_args["_model_id_"],
+            torch_dtype=torch.float16
+        ).to("cuda")
+    
     if run_compile:
         print("Run torch compile")
         pipe_base.unet = torch.compile(pipe_base.unet, mode="reduce-overhead", fullgraph=True)
@@ -55,6 +60,7 @@ def main():
     latency_ms = benchmark_func(pipe_base, run_compile, prompt)
 
     print("Pipeline latency:", latency_ms, "ms")
+    print(sd_args)
 
 if __name__ == "__main__":
     main()
