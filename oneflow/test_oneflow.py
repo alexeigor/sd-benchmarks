@@ -1,3 +1,6 @@
+import os
+os.environ['HF_HOME']='/workspace/.cache/huggingface'
+
 from onediff.infer_compiler import oneflow_compile
 from onediff.optimization import rewrite_self_attention
 from diffusers import StableDiffusionPipeline

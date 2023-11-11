@@ -17,10 +17,13 @@ import time
 
 os.environ['XLA_FLAGS']='--xla_dump_to=/workspace/xla_dump/'
 
+sd_args = {"width": 512, "height": 512, "guidance_scale": 7.5, "num_inference_steps": 50}
+
+
 def benchmark_func(pipeline, prompts, p_params, rng):
     for _ in range(5):
         rng = jax.random.split(rng[0], jax.device_count())
-        _ =  pipeline(prompts, p_params, rng, jit=True, height=512, width=512, num_inference_steps=50, guidance_scale=7.5)
+        _ =  pipeline(prompts, p_params, rng, jit=True, **sd_args)
 
     # Start benchmark.
 
@@ -30,7 +33,7 @@ def benchmark_func(pipeline, prompts, p_params, rng):
     for _ in range(n_runs):
         start = time.perf_counter()
         rng = jax.random.split(rng[0], jax.device_count())
-        _ =  pipeline(prompts, p_params, rng, jit=True, height=512, width=512, num_inference_steps=50, guidance_scale=7.5)
+        _ =  pipeline(prompts, p_params, rng, jit=True, **sd_args)
         end = time.perf_counter() - start
         latencies.append(end)
 
@@ -45,15 +48,13 @@ def main():
 
     print(f"Found {num_devices} JAX devices of type {device_type}.")
 
-    dtype = jnp.bfloat16
-
-    # model = "runwayml/stable-diffusion-v1-5"
-    model = "stabilityai/stable-diffusion-2-1"
+    model = "runwayml/stable-diffusion-v1-5"
+    # model = "stabilityai/stable-diffusion-2-1"
 
     pipeline, params = FlaxStableDiffusionPipeline.from_pretrained(
         model,
-        revision="bf16",
-        dtype=dtype,
+        revision="bf16", 
+        dtype=jax.numpy.bfloat16
     )
 
     prompt = "A cinematic film still of Morgan Freeman starring as Jimi Hendrix, portrait, 40mm lens, shallow depth of field, close up, split lighting, cinematic"
@@ -69,7 +70,7 @@ def main():
     rng = [rng]
     rng = jax.random.split(rng[0], jax.device_count())
 
-    images = pipeline(prompt_ids, p_params, rng, jit=True).images
+    images = pipeline(prompt_ids, p_params, rng, jit=True, **sd_args).images
     images = images.reshape((images.shape[0] * images.shape[1], ) + images.shape[-3:])
     images = pipeline.numpy_to_pil(images)
     images[0].save('example.png')
