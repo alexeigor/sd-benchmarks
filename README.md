@@ -2,6 +2,19 @@
 
 model: 
 
+https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0
+
+batch size = 1, image size 1024x1024, 50 iterations
+
+#### A100-SXM, 40GB
+| Engine                 | Time                  | 
+| :---                   | :---                  |
+| PT2.0,fp16 + compile   | 5.35 s                |
+
+## Stable Diffusion inference benchmarks
+
+model: 
+
 https://huggingface.co/runwayml/stable-diffusion-v1-5 - sd1.5
 
 https://huggingface.co/stabilityai/stable-diffusion-2-1 - sd2.1

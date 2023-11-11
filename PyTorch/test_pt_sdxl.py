@@ -5,9 +5,9 @@ import time
 import numpy as np
 
 import torch
-from diffusers import DiffusionPipeline
+from diffusers import StableDiffusionXLPipeline
 
-sd_args = {"width": 768, "height": 768, "guidance_scale": 7.5}
+sd_args = {"width": 1024, "height": 1024, "guidance_scale": 7.5, "num_inference_steps": 50}
 
 # @torch.inference_mode()
 def benchmark_func(pipe, compiled, prompt):
@@ -37,41 +37,27 @@ run_compile = True  # Set True / False
 
 def main():
     # load both base & refiner
-    base = DiffusionPipeline.from_pretrained(
-        "stabilityai/stable-diffusion-xl-base-1.0", torch_dtype=torch.float16, variant="fp16", use_safetensors=True
-    )
-    base.to("cuda")
-    refiner = DiffusionPipeline.from_pretrained(
-        "stabilityai/stable-diffusion-xl-refiner-1.0",
-        text_encoder_2=base.text_encoder_2,
-        vae=base.vae,
-        torch_dtype=torch.float16,
-        use_safetensors=True,
-        variant="fp16",
-    )
-    refiner.to("cuda")
+    pipe = StableDiffusionXLPipeline.from_pretrained(
+        # "segmind/SSD-1B",
+        "stabilityai/stable-diffusion-xl-base-1.0", 
+        torch_dtype=torch.float16, 
+        variant="fp16", 
+        use_safetensors=True
+    ).to("cuda")
 
-    # Define how many steps and what % of steps to be run on each experts (80/20) here
-    n_steps = 40
-    high_noise_frac = 0.8
+    pipe.unet = torch.compile(pipe.unet, mode="reduce-overhead", fullgraph=True)
 
-    prompt = "A majestic lion jumping from a big stone at night"
-
-    # run both experts
-    image = base(
-        prompt=prompt,
-        num_inference_steps=n_steps,
-        denoising_end=high_noise_frac,
-        output_type="latent",
-    ).images
-    image = refiner(
-        prompt=prompt,
-        num_inference_steps=n_steps,
-        denoising_start=high_noise_frac,
-        image=image,
-    ).images[0]
-
+    prompt = "a photo of an astronaut riding a horse on mars"
+    image = pipe(prompt, **sd_args).images[0]
+ 
     image.save("image_sdxl.jpg")
+
+    batch_size = 1
+    prompt = ["A majestic lion jumping from a big stone at night"] * batch_size
+
+    latency_ms = benchmark_func(pipe, run_compile, prompt)
+
+    print("Pipeline latency:", latency_ms, "ms")
 
 if __name__ == "__main__":
     main()
