@@ -17,8 +17,10 @@ import time
 
 os.environ['XLA_FLAGS']='--xla_dump_to=/workspace/xla_dump/'
 
-sd_args = {"width": 512, "height": 512, "guidance_scale": 7.5, "num_inference_steps": 50}
+sd_args_v15 = {"_model_id_": "runwayml/stable-diffusion-v1-5", "width": 512, "height": 512, "guidance_scale": 7.5, "num_inference_steps": 50}
+sd_args_v21 = {"_model_id_": "stabilityai/stable-diffusion-2-1", "width": 768, "height": 768, "guidance_scale": 7.5, "num_inference_steps": 50}
 
+sd_args = sd_args_v21
 
 def benchmark_func(pipeline, prompts, p_params, rng):
     for _ in range(5):
@@ -48,14 +50,15 @@ def main():
 
     print(f"Found {num_devices} JAX devices of type {device_type}.")
 
-    model = "runwayml/stable-diffusion-v1-5"
-    # model = "stabilityai/stable-diffusion-2-1"
-
     pipeline, params = FlaxStableDiffusionPipeline.from_pretrained(
-        model,
+        sd_args["_model_id_"],
         revision="bf16", 
-        dtype=jax.numpy.bfloat16
+        dtype=jax.numpy.bfloat16,
+        safety_checker=None,
+        feature_extractor=None
     )
+
+    del sd_args["_model_id_"]
 
     prompt = "A cinematic film still of Morgan Freeman starring as Jimi Hendrix, portrait, 40mm lens, shallow depth of field, close up, split lighting, cinematic"
     prompt = [prompt] * jax.device_count()

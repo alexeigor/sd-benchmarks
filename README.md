@@ -31,7 +31,7 @@ batch size = 1, image size 512x512, 50 iterations
 | Oneflow,fp16           | 0.98 s (5.62 gb)      |                       |                       |
 | TensorRT 8.6.1, fp16   | 0.98 s                | 0.81 s                | 1.88 s                |
 | Onnxruntime,fp16,CUDA  | 1.05 s                | 1.00 s                |                       |
-| Jax,XLA,bf16           | 1.58 s                | 1.35 s                |                       |
+| Jax,XLA,bf16           | 1.58 s                | 1.35 s                | 3.61 s                |
 
 #### H100-PCIe, 80GB
 
@@ -84,3 +84,6 @@ docker run -it --network=host -v ${PWD}/workspace:/workspace -w /workspace --gpu
 - https://github.com/microsoft/Olive
 - https://github.com/NVIDIA/TensorRT/tree/main/demo/Diffusion (kudos to Denis Timonin https://www.linkedin.com/in/denistimonin/)
 - https://medium.com/microsoftazure/accelerating-stable-diffusion-inference-with-onnx-runtime-203bd7728540
+- https://huggingface.co/blog/sdxl_jax
+- https://huggingface.co/blog/simple_sdxl_optimizations
+
