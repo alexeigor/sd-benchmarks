@@ -9,6 +9,8 @@ from diffusers import DiffusionPipeline
 
 sd_args_v15 = {"_model_id_": "runwayml/stable-diffusion-v1-5", "width": 512, "height": 512, "guidance_scale": 7.5, "num_inference_steps": 50}
 sd_args_v21 = {"_model_id_": "stabilityai/stable-diffusion-2-1", "width": 768, "height": 768, "guidance_scale": 7.5, "num_inference_steps": 50}
+sd_args_xl = {"_model_id_": "stabilityai/stable-diffusion-xl-base-1.0", "width": 1024, "height": 1024, "guidance_scale": 7.5, "num_inference_steps": 50}
+
 
 sd_args = sd_args_v15
 
@@ -44,7 +46,9 @@ def main():
 
     pipe_base = DiffusionPipeline.from_pretrained(
             sd_args["_model_id_"],
-            torch_dtype=torch.float16
+            torch_dtype=torch.float16,
+            use_safetensors=True,
+            variant="fp16"
         ).to("cuda")
     
     if run_compile:
