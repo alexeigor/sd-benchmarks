@@ -1,13 +1,14 @@
-FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
+FROM nvcr.io/nvidia/pytorch:23.10-py3
 
-RUN apt-get update -y && \
-    apt-get install --no-install-recommends -y git curl python3-pip
-
-RUN pip install torch --index-url https://download.pytorch.org/whl/cu118
+RUN apt-get update && apt-get install -y \
+    && apt-get install --no-install-recommends -y git curl python3-pip \
+    && pip install --upgrade pip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /code
 
-RUN pip install deepspeed triton==2.0.0.dev20221202 diffusers transformers accelerate
+RUN pip install deepspeed diffusers transformers accelerate
 
 COPY test_deepspeed.py /code/test_deepspeed.py
 

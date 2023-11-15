@@ -27,7 +27,7 @@ batch size = 1, image size 512x512, 50 iterations
 | PT2.0,fp16             | 1.96 s (4.54gb VRAM)  |                       |                       |
 | PT2.0,fp16 + compile   | 1.36 s (5.96 gb)      |                       | 2.37 s                |
 | AITemplate,fp16        | 1.01 s (4.06 gb)      |                       |                       |
-| DeepSpeed,fp16         | 1.28 s (4.97 gb)      |                       |                       |
+| DeepSpeed,fp16         | 1.18 s                |                       | 2.28 s                |
 | Oneflow,fp16           | 0.98 s (5.62 gb)      |                       |                       |
 | TensorRT 8.6.1, fp16   | 0.98 s                | 0.81 s                | 1.88 s                |
 | Onnxruntime,fp16,CUDA  | 1.05 s                | 1.00 s                |                       |
