@@ -1,9 +1,11 @@
-FROM nvcr.io/nvidia/pytorch:23.02-py3
-# custom torch 1.14 build that supports H100
+FROM nvcr.io/nvidia/pytorch:23.10-py3
+# https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/index.html
 
-RUN apt-get update -y && \
-    apt-get install --no-install-recommends -y git curl python3-pip && \
-    pip install --upgrade pip
+RUN apt-get update && apt-get install -y \
+    && apt-get install --no-install-recommends -y git curl python3-pip \
+    && pip install --upgrade pip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /code
 
