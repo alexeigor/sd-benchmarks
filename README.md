@@ -7,9 +7,11 @@ https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0
 batch size = 1, image size 1024x1024, 50 iterations
 
 #### A100-SXM, 40GB
-| Engine                 | Time                  | 
-| :---                   | :---                  |
-| PT2.0,fp16 + compile   | 5.35 s                |
+| Engine                      | Time                  | 
+| :---                        | :---                  |
+| PT2.0,fp16 + compile        | 5.35 s                |
+| Onnxruntime,fp16,ORT_CUDA   | 4.28 s                |
+
 
 ## Stable Diffusion inference benchmarks
 
@@ -22,16 +24,16 @@ https://huggingface.co/stabilityai/stable-diffusion-2-1 - sd2.1
 batch size = 1, image size 512x512, 50 iterations
 
 #### A100-SXM, 40GB
-| Engine                 | Time, sd1.5           | Time, sd2.1           | Time, sd2.1, 768x768  | 
-| :---                   | :---                  | :---                  | :---                  |
-| PT2.0,fp16             | 1.96 s (4.54gb VRAM)  |                       |                       |
-| PT2.0,fp16 + compile   | 1.36 s (5.96 gb)      |                       | 2.37 s                |
-| AITemplate,fp16        | 1.01 s (4.06 gb)      |                       |                       |
-| DeepSpeed,fp16         | 1.18 s                |                       | 2.28 s                |
-| Oneflow,fp16           | 0.98 s (5.62 gb)      |                       |                       |
-| TensorRT 8.6.1, fp16   | 0.98 s                | 0.81 s                | 1.88 s                |
-| Onnxruntime,fp16,CUDA  | 1.05 s                | 1.00 s                |                       |
-| Jax,XLA,bf16           | 1.58 s                | 1.35 s                | 3.61 s                |
+| Engine                     | Time, sd1.5           | Time, sd2.1, 512x512  | Time, sd2.1, 768x768  | 
+| :---                       | :---                  | :---                  | :---                  |
+| PT2.0,fp16                 | 1.96 s (4.54gb VRAM)  |                       |                       |
+| PT2.0,fp16 + compile       | 1.36 s (5.96 gb)      |                       | 2.37 s                |
+| AITemplate,fp16            | 1.01 s (4.06 gb)      |                       |                       |
+| DeepSpeed,fp16             | 1.18 s                |                       | 2.28 s                |
+| Oneflow,fp16               | 0.98 s (5.62 gb)      |                       |                       |
+| TensorRT 8.6.1, fp16       | 0.98 s                | 0.81 s                | 1.88 s                |
+| Onnxruntime,fp16,ORT_CUDA  | 0.85 s                | 0.76 s                | 1.63 s                |
+| Jax,XLA,bf16               | 1.58 s                | 1.35 s                | 3.61 s                |
 
 #### H100-PCIe, 80GB
 
