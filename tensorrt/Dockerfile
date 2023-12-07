@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/tensorrt:23.10-py3
+FROM nvcr.io/nvidia/tensorrt:23.11-py3
 # switch to https://catalog.ngc.nvidia.com/orgs/nvidia/containers/tensorrt
 
 RUN apt-get update && apt-get install -y \
@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /code
 
 # !! release/9.1 , please check https://github.com/NVIDIA/TensorRT/releases
-RUN git clone https://github.com/NVIDIA/TensorRT.git && cd TensorRT && git checkout release/9.1
+RUN git clone https://github.com/NVIDIA/TensorRT.git && cd TensorRT && git checkout release/9.2
 
 # RUN pip install --upgrade tensorrt --extra-index-url https://pypi.nvidia.com
 
