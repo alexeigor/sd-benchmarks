@@ -60,6 +60,7 @@ batch size = 1, image size 512x512, 50 iterations
 | Engine                 | Time, sd1.5           | Time, sd2.1           | Time, sd2.1, 768x768  | 
 | :---                   | :---                  | :---                  | :---                  |
 | PT2.0,fp16,compile     | 2.09 s                |                       | 3.08 s                |
+| TensorRT 8.6.2,fp16    | 0.91 s                |                       | 2.19 s                |
 
 #### V100, T4
 | GPU                    | PT2.0,fp16,xformers   | 
