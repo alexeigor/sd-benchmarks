@@ -12,6 +12,15 @@ batch size = 1, image size 1024x1024, 50 iterations
 | PT2.0,fp16 + compile        | 5.35 s                |
 | Onnxruntime,fp16,ORT_CUDA   | 4.28 s                |
 
+#### RTX 4090, 24GB
+| Engine                      | Time                  | 
+| :---                        | :---                  |
+| PT2.0,fp16 + compile        | 6.02 s                |
+
+#### RTX 6000 Ada, 48GB
+| Engine                      | Time                  | 
+| :---                        | :---                  |
+| PT2.0,fp16 + compile        | 9.07 s                |
 
 ## Stable Diffusion inference benchmarks
 
@@ -54,13 +63,20 @@ batch size = 1, image size 512x512, 50 iterations
 #### RTX 4090, 24GB
 | Engine                 | Time, sd1.5           | Time, sd2.1           | Time, sd2.1, 768x768  | 
 | :---                   | :---                  | :---                  | :---                  |
-| TensorRT 8.6.1, fp16   | 0.745 s               | 0.681 s               | 1.524 s               |
+| PT2.0,fp16,compile     | 1.17 s                |                       | 2.26 s                |
+| TensorRT 8.6.1, fp16   | 0.74 s                | 0.68 s                | 1.52 s               |
 
 #### L40, 48GB
 | Engine                 | Time, sd1.5           | Time, sd2.1           | Time, sd2.1, 768x768  | 
 | :---                   | :---                  | :---                  | :---                  |
 | PT2.0,fp16,compile     | 2.09 s                |                       | 3.08 s                |
 | TensorRT 8.6.2,fp16    | 0.91 s                |                       | 2.19 s                |
+
+#### RTX 6000 Ada, 48GB
+| Engine                 | Time, sd1.5           | Time, sd2.1           | Time, sd2.1, 768x768  | 
+| :---                   | :---                  | :---                  | :---                  |
+| PT2.0,fp16,compile     | 1.28 s                |                       | 2.77 s                |
+| TensorRT 8.6.2,fp16    | 0.90 s                |                       | 2.25 s                |
 
 #### V100, T4
 | GPU                    | PT2.0,fp16,xformers   | 
