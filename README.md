@@ -110,4 +110,6 @@ docker run -it --network=host -v ${PWD}/workspace:/workspace -w /workspace --gpu
 - https://medium.com/microsoftazure/accelerating-stable-diffusion-inference-with-onnx-runtime-203bd7728540
 - https://huggingface.co/blog/sdxl_jax
 - https://huggingface.co/blog/simple_sdxl_optimizations
+- https://pytorch.org/blog/accelerating-generative-ai-3/
+
 
