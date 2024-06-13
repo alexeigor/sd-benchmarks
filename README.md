@@ -88,7 +88,7 @@ batch size = 1, image size 512x512, 50 iterations
 ## How to run
 Ubuntu, Debian VM setup https://gist.github.com/alexeigor/b4c21b5e1fe62d670c433d4ac8c9fd83
 ```bash
-docker build -f ./Dockerfile --network=host -t test_pt .
+docker build -f ./Dockerfile --network=host --build-arg HF_TOKEN=xxxxx -t test_pt .
 ```
 
 ```bash

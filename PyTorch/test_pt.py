@@ -1,6 +1,6 @@
 import os
 
-os.environ["HF_HOME"] = "/workspace/.cache/huggingface"
+# os.environ["HF_HOME"] = "/workspace/.cache/huggingface"
 
 import time
 import numpy as np
@@ -29,14 +29,24 @@ sd_args_xl = {
     "guidance_scale": 7.5,
     "num_inference_steps": 50,
 }
+sd_args_v3 = {
+    "_model_id_": "stabilityai/stable-diffusion-3-medium-diffusers",
+    "width": 1024,
+    "height": 1024,
+    "guidance_scale": 7.0,
+    "num_inference_steps": 28,
+}
 
-sd_args = sd_args_v15
+sd_args = sd_args_v3
 
 
 # @torch.inference_mode()
 def benchmark_func(pipe, compiled, prompt):
+    sd_args_copy = sd_args
+    del sd_args_copy["_model_id_"]
+
     for _ in range(5):
-        _ = pipe(prompt, **sd_args)
+        _ = pipe(prompt, **sd_args_copy)
     # Start benchmark.
     torch.cuda.synchronize()
 
@@ -47,9 +57,9 @@ def benchmark_func(pipe, compiled, prompt):
         start = time.perf_counter_ns()
         if not compiled:
             with torch.inference_mode():
-                _ = pipe(prompt, **sd_args)
+                _ = pipe(prompt, **sd_args_copy)
         else:
-            _ = pipe(prompt, **sd_args)
+            _ = pipe(prompt, **sd_args_copy)
         torch.cuda.synchronize()
         end = time.perf_counter_ns() - start
         latencies.append(end)
@@ -58,18 +68,18 @@ def benchmark_func(pipe, compiled, prompt):
     return int(time_avg_s / 1000000.0)
 
 
-run_compile = True  # Set True / False
+run_compile = False  # Set True / False
 
 
 def main():
     batch_size = 1
-    prompt = ["A majestic lion jumping from a big stone at night"] * batch_size
+    prompt = ["A cat holding a sign that says hello world"] * batch_size
 
     pipe_base = DiffusionPipeline.from_pretrained(
         sd_args["_model_id_"],
         torch_dtype=torch.float16,
         use_safetensors=True,
-        variant="fp16",
+        # variant="fp16",
     ).to("cuda")
 
     if run_compile:
@@ -78,11 +88,15 @@ def main():
             pipe_base.unet, mode="reduce-overhead", fullgraph=True
         )
 
-    baseline_image = pipe_base(prompt, **sd_args).images
+    sd_args_copy = sd_args
+    del sd_args_copy["_model_id_"]
+    baseline_image = pipe_base(prompt, **sd_args_copy).images
     for idx, im in enumerate(baseline_image):
         im.save(f"{idx:06}.jpg")
 
-    prompt = ["A majestic lion jumping from a big stone at night"] * batch_size
+    # A cat holding a sign that says hello world
+    # A majestic lion jumping from a big stone at night
+    prompt = ["A cat holding a sign that says hello world"] * batch_size
 
     latency_ms = benchmark_func(pipe_base, run_compile, prompt)
 
