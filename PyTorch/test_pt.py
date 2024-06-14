@@ -41,12 +41,9 @@ sd_args = sd_args_v3
 
 
 # @torch.inference_mode()
-def benchmark_func(pipe, compiled, prompt):
-    sd_args_copy = sd_args
-    del sd_args_copy["_model_id_"]
-
+def benchmark_func(pipe, compiled, prompt, sd_args_local):
     for _ in range(5):
-        _ = pipe(prompt, **sd_args_copy)
+        _ = pipe(prompt, **sd_args_local)
     # Start benchmark.
     torch.cuda.synchronize()
 
@@ -57,9 +54,9 @@ def benchmark_func(pipe, compiled, prompt):
         start = time.perf_counter_ns()
         if not compiled:
             with torch.inference_mode():
-                _ = pipe(prompt, **sd_args_copy)
+                _ = pipe(prompt, **sd_args_local)
         else:
-            _ = pipe(prompt, **sd_args_copy)
+            _ = pipe(prompt, **sd_args_local)
         torch.cuda.synchronize()
         end = time.perf_counter_ns() - start
         latencies.append(end)
@@ -98,7 +95,7 @@ def main():
     # A majestic lion jumping from a big stone at night
     prompt = ["A cat holding a sign that says hello world"] * batch_size
 
-    latency_ms = benchmark_func(pipe_base, run_compile, prompt)
+    latency_ms = benchmark_func(pipe_base, run_compile, prompt, sd_args_copy)
 
     print("Pipeline latency:", latency_ms, "ms")
     print(sd_args)
